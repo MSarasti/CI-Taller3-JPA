@@ -10,5 +10,5 @@ public interface SpecialOfferProductDao {
 	void delete(Specialofferproduct specialofferproduct);
 	
 	List<Specialofferproduct> findAll();
-	Specialofferproduct findById(Integer id);
+	Specialofferproduct findById(SpecialofferproductPK id);
 }

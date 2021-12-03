@@ -31,11 +31,10 @@ public class ProductDaoImpl implements ProductDao {
 		entityManager.remove(product);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findAll() {
 		String jpql = "Select p from Product p";
-		return entityManager.createQuery(jpql).getResultList();
+		return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
 	@Override
@@ -45,12 +44,13 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public Product findByProductNumber(String productnumber) {
-		return null;
+		return entityManager.find(Product.class, productnumber);
 	}
 
 	@Override
 	public List<Product> findByStyle(String style) {
-		return null;
+		String jpql = "Select p from Product p WHERE p.style =: style";
+		return entityManager.createQuery(jpql, Product.class).setParameter("style", style).getResultList();
 	}
 
 }

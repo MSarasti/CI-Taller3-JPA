@@ -11,7 +11,7 @@ public interface SpecialOfferDao {
 	void delete(Specialoffer specialoffer);
 	
 	List<Specialoffer> findAll();
-	Specialoffer findById(SpecialofferproductPK id);
+	Specialoffer findById(Integer id);
 	List<Specialoffer> findByStartDate(Timestamp startdate);	
 	List<Specialoffer> findByEndDate(Timestamp enddate);
 }
