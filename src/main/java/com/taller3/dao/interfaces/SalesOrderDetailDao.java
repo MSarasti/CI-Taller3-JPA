@@ -12,4 +12,5 @@ public interface SalesOrderDetailDao {
 	List<Salesorderdetail> findAll();
 	Salesorderdetail findById(Integer id);
 	List<Salesorderdetail> findByProductId(Integer pId);
+	List<Object[]> findOrderDetailByProductWithMoreThanOneSOP();
 }

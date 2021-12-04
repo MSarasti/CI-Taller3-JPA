@@ -48,5 +48,12 @@ public class SalesOrderDetailDaoImpl implements SalesOrderDetailDao {
 		String jpql = "Select s from Salesorderdetail s WHERE s.specialofferproduct.productid := pId";
 		return entityManager.createQuery(jpql, Salesorderdetail.class).setParameter("pId", pId).getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findOrderDetailByProductWithMoreThanOneSOP() {
+		String jpql = "Select s, p.name from Salesorderdetail s WHERE (Select COUNT(sop) FROM s.specialofferproduct sop, Product p WHERE sop.id.productid=p.productid) > 1 ORDER BY p.name ASC";
+		return entityManager.createQuery(jpql).getResultList();
+	}
 
 }
