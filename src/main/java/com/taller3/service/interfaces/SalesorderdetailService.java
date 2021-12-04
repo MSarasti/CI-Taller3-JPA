@@ -5,7 +5,7 @@ import com.taller3.model.sales.SalesorderdetailPK;
 
 public interface SalesorderdetailService {
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, Integer pId, Integer soId) throws Exception;
-	public Salesorderdetail searchSalesOrderDetail(SalesorderdetailPK sdId);
-	public Salesorderdetail updateSalesOrderDetail(SalesorderdetailPK sdId, Salesorderdetail sd) throws Exception;
-	public void deleteSalesOrderDetail(SalesorderdetailPK sdId);
+	public Salesorderdetail searchSalesOrderDetail(Integer sdId);
+	public Salesorderdetail updateSalesOrderDetail(Integer sdId, Salesorderdetail sd) throws Exception;
+	public void deleteSalesOrderDetail(Integer sdId);
 }

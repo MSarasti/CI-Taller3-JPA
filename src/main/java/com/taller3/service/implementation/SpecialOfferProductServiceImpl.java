@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taller3.dao.implementation.*;
+import com.taller3.dao.interfaces.SpecialOfferProductDao;
 import com.taller3.model.prod.*;
 import com.taller3.model.sales.*;
 import com.taller3.repository.*;
@@ -14,53 +16,52 @@ import com.taller3.service.interfaces.SpecialofferproductService;
 @Service
 public class SpecialOfferProductServiceImpl implements SpecialofferproductService {
 	@Autowired
-	public ProductRepository pRep;
+	public ProductDaoImpl pDao;
 	@Autowired
-	public SpecialofferRepository soRep;
+	public SpecialOfferDaoImpl soDao;
 	@Autowired
-	public SpecialofferproductRepository sopRep;
+	public SpecialOfferProductDao sopDao;
 	
 	public SpecialOfferProductServiceImpl() {
 	}
 
 	@Override
 	public Specialofferproduct saveSpecialOfferProduct(Specialofferproduct sp, Integer pId, Integer soId) {
-		Product p = pRep.findById(pId).get();
-		Specialoffer so = soRep.findById(soId).get();
+		Product p = pDao.findById(pId);
+		Specialoffer so = soDao.findById(soId);
 		sp.setSpecialoffer(so);
-		sp.getId().setProductid(pId);
+		sp.getId().setProductid(p.getProductid());
 		sp.getId().setSpecialofferid(soId);
-		sopRep.save(sp);
+		sopDao.save(sp);
 		
 		return sp;
 	}
 
 	@Override
 	public Specialofferproduct searchSpecialOfferProduct(SpecialofferproductPK spId) {
-		Optional<Specialofferproduct> op = sopRep.findById(spId);
-		return (op.isEmpty()) ? null : op.get();
+		return sopDao.findById(spId);
 	}
 
 	@Override
 	public Specialofferproduct updateSpecialOfferProduct(SpecialofferproductPK spId, Specialofferproduct sp) {
-		Specialofferproduct toChange = sopRep.findById(spId).get();
+		Specialofferproduct toChange = sopDao.findById(spId);
 		toChange.setModifieddate(sp.getModifieddate());
 		toChange.setRowguid(sp.getRowguid());
 		toChange.setSpecialoffer(sp.getSpecialoffer());
-		sopRep.save(toChange);
+		sopDao.update(toChange);
 		return sp;
 	}
 
 	@Override
 	public void deleteSpecialOfferProduct(SpecialofferproductPK spId) {
-		sopRep.delete(sopRep.findById(spId).get());
+		sopDao.delete(sopDao.findById(spId));
 	}
 
 	public Iterable<Specialofferproduct> findAll(){
-		return sopRep.findAll();
+		return sopDao.findAll();
 	}
 
-	public Optional<Specialofferproduct> findById(SpecialofferproductPK id) {
-		return sopRep.findById(id);
+	public Specialofferproduct findById(SpecialofferproductPK id) {
+		return sopDao.findById(id);
 	}
 }

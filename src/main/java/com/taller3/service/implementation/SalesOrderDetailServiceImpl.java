@@ -1,11 +1,13 @@
 package com.taller3.service.implementation;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taller3.dao.implementation.*;
 import com.taller3.model.prod.*;
 import com.taller3.model.sales.*;
 import com.taller3.repository.*;
@@ -14,43 +16,46 @@ import com.taller3.service.interfaces.SalesorderdetailService;
 @Service
 public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	@Autowired
-	public ProductRepository pRep;
+	public ProductDaoImpl pDao;
 	@Autowired
-	public SpecialofferRepository soRep;
+	public SpecialOfferDaoImpl soDao;
 	@Autowired
-	public SpecialofferproductRepository sopRep;
+	public SpecialOfferProductDaoImpl sopDao;
 	@Autowired
-	public SalesorderdetailRepository sodRep;
+	public SalesOrderDetailDaoImpl sodDao;
 	
 	public SalesOrderDetailServiceImpl() {
 	}
 
 	@Override
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, Integer pId, Integer soId) {
-		Specialoffer so = soRep.findById(soId).get();
-		Specialofferproduct sop = sopRep.findBySpecialoffer(so).get();
-		if(sop.getId().getProductid().equals(pId) && sop.getId().getSpecialofferid().equals(soId))
-			sd.setSpecialofferproduct(sop);
-		sodRep.save(sd);
+		Specialoffer so = soDao.findById(soId);
+		List<Specialofferproduct> offers = so.getSpecialofferproducts();
+		Specialofferproduct sop = null;
+		for (int i = 0; i < offers.size(); i++) {
+			sop = offers.get(i);
+			if(sop.getId().getProductid().equals(pId) && sop.getId().getSpecialofferid().equals(soId))
+				sd.setSpecialofferproduct(sop);
+		}
+		sodDao.save(sd);
 		return sd;
 	}
 	
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, SpecialofferproductPK sopId) {
-		Specialofferproduct sop = sopRep.findById(sopId).get();
+		Specialofferproduct sop = sopDao.findById(sopId);
 		sd.setSpecialofferproduct(sop);
-		sodRep.save(sd);
+		sodDao.save(sd);
 		return sd;
 	}
 
 	@Override
-	public Salesorderdetail searchSalesOrderDetail(SalesorderdetailPK sdId) {
-		Optional<Salesorderdetail> op = sodRep.findById(sdId);
-		return (op.isEmpty()) ? null : op.get();
+	public Salesorderdetail searchSalesOrderDetail(Integer sdId) {
+		return sodDao.findById(sdId);
 	}
 
 	@Override
-	public Salesorderdetail updateSalesOrderDetail(SalesorderdetailPK sdId, Salesorderdetail sd) {
-		Salesorderdetail toChange = sodRep.findById(sdId).get();
+	public Salesorderdetail updateSalesOrderDetail(Integer sdId, Salesorderdetail sd) {
+		Salesorderdetail toChange = sodDao.findById(sdId);
 		toChange.setCarriertrackingnumber(sd.getCarriertrackingnumber());
 		toChange.setModifieddate(sd.getModifieddate());
 		toChange.setOrderqty(sd.getOrderqty());
@@ -58,21 +63,21 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 		toChange.setSpecialofferproduct(sd.getSpecialofferproduct());
 		toChange.setUnitprice(sd.getUnitprice());
 		toChange.setUnitpricediscount(sd.getUnitpricediscount());
-		sodRep.save(toChange);
+		sodDao.update(toChange);
 		
 		return sd;
 	}
 
 	@Override
-	public void deleteSalesOrderDetail(SalesorderdetailPK sdId) {
-		sodRep.delete(sodRep.findById(sdId).get());
+	public void deleteSalesOrderDetail(Integer sdId) {
+		sodDao.delete(sodDao.findById(sdId));
 	}
 
 	public Iterable<Salesorderdetail> findAll(){
-		return sodRep.findAll();
+		return sodDao.findAll();
 	}
 
-	public Optional<Salesorderdetail> findById(SalesorderdetailPK id) {
-		return sodRep.findById(id);
+	public Salesorderdetail findById(Integer id) {
+		return sodDao.findById(id);
 	}
 }

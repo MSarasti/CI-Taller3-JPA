@@ -8,6 +8,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taller3.dao.implementation.SpecialOfferDaoImpl;
 import com.taller3.model.sales.Specialoffer;
 import com.taller3.repository.SpecialofferRepository;
 import com.taller3.service.interfaces.SpecialofferService;
@@ -16,27 +17,26 @@ import com.taller3.service.interfaces.SpecialofferService;
 public class SpecialOfferServiceImpl implements SpecialofferService {
 	
 	@Autowired
-	private SpecialofferRepository soRepo;
+	private SpecialOfferDaoImpl soDao;
 	
-	public SpecialOfferServiceImpl(SpecialofferRepository soRepo) {
-		this.soRepo = soRepo;
+	public SpecialOfferServiceImpl(SpecialOfferDaoImpl soDao) {
+		this.soDao = soDao;
 	}
 
 	@Override
 	public Specialoffer saveSpecialOffer(Specialoffer s) {
-		soRepo.save(s);
+		soDao.save(s);
 		return s;
 	}
 
 	@Override
 	public Specialoffer searchSpecialOffer(Integer sId) {
-		Optional<Specialoffer> opSO = soRepo.findById(sId);
-		return (opSO.isEmpty()) ? null : opSO.get();
+		return soDao.findById(sId);
 	}
 
 	@Override
 	public Specialoffer updateSpecialOffer(Integer sId, Specialoffer s) {
-		Specialoffer toChange = soRepo.findById(sId).get();
+		Specialoffer toChange = soDao.findById(sId);
 		String cat = s.getCategory();
 		BigDecimal dis = s.getDiscountpct();
 		LocalDate mod = s.getModifieddate();
@@ -53,20 +53,20 @@ public class SpecialOfferServiceImpl implements SpecialofferService {
 		toChange.setStartdate(s.getStartdate());
 		toChange.setEnddate(s.getEnddate());
 		toChange.setType(s.getType());
-		soRepo.save(toChange);
+		soDao.update(toChange);
 		return s;
 	}
 
 	@Override
 	public void deleteSpecialOffer(Integer sId) {
-		soRepo.delete(soRepo.findById(sId).get());
+		soDao.delete(soDao.findById(sId));
 	}
 
 	public Iterable<Specialoffer> findAll() {
-		return soRepo.findAll();
+		return soDao.findAll();
 	}
 
-	public Optional<Specialoffer> findById(Integer id) {
-		return soRepo.findById(id);
+	public Specialoffer findById(Integer id) {
+		return soDao.findById(id);
 	}
 }

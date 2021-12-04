@@ -42,4 +42,5 @@ public class SpecialOfferProductDaoImpl implements SpecialOfferProductDao {
 		return entityManager.find(Specialofferproduct.class, id);
 	}
 
+	
 }

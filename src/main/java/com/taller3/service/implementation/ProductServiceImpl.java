@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taller3.dao.implementation.ProductDaoImpl;
 import com.taller3.model.prod.*;
 import com.taller3.repository.*;
 import com.taller3.service.interfaces.ProductService;
@@ -12,7 +13,7 @@ import com.taller3.service.interfaces.ProductService;
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
-	public ProductRepository proRep;
+	public ProductDaoImpl pDao;
 	@Autowired
 	public ProductCategoryRepository proCatRep;
 	@Autowired
@@ -20,9 +21,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	public UnitmeasureRepository umRep;
 
-	public ProductServiceImpl(ProductRepository proRep, ProductCategoryRepository proCatRep,
+	public ProductServiceImpl(ProductDaoImpl pDao, ProductCategoryRepository proCatRep,
 			ProductSubcategoryRepository proSubRep, UnitmeasureRepository umRep) {
-		this.proRep = proRep;
+		this.pDao = pDao;
 		this.proCatRep = proCatRep;
 		this.proSubRep = proSubRep;
 		this.umRep = umRep;
@@ -46,20 +47,19 @@ public class ProductServiceImpl implements ProductService {
 		proSubRep.save(psub);
 		umRep.save(um1);
 		umRep.save(um2);
-		proRep.save(p);
+		pDao.save(p);
 
 		return p;
 	}
 
 	@Override
 	public Product searchProduct(Integer pId) {
-		Optional<Product> opProd = proRep.findById(pId);
-		return (opProd.isPresent()) ? opProd.get() : null;
+		return pDao.findById(pId);
 	}
 
 	@Override
 	public Product updateProduct(Integer pId, Product p) {
-		Product toChange = proRep.findById(pId).get();
+		Product toChange = pDao.findById(pId);
 		toChange.setBillofmaterials1(p.getBillofmaterials1());
 		toChange.setBillofmaterials2(p.getBillofmaterials2());
 		toChange.setClass_(p.getClass_());
@@ -94,13 +94,13 @@ public class ProductServiceImpl implements ProductService {
 		toChange.setUnitmeasure2(p.getUnitmeasure2());
 		toChange.setWeight(p.getWeight());
 		toChange.setWorkorders(p.getWorkorders());
-		proRep.save(toChange);
+		pDao.update(toChange);
 		return toChange;
 	}
 
 	@Override
 	public void deleteProduct(Integer pId) {
-		proRep.delete(proRep.findById(pId).get());
+		pDao.delete(pDao.findById(pId));
 	}
 
 	@Override
@@ -165,12 +165,12 @@ public class ProductServiceImpl implements ProductService {
 		umRep.delete(umRep.findById(umId).get());
 	}
 	
-	public Optional<Product> findById(Integer id){
-		return proRep.findById(id);
+	public Product findById(Integer id){
+		return pDao.findById(id);
 	}
 	
 	public Iterable<Product> findAllProducts() {
-		return proRep.findAll();
+		return pDao.findAll();
 	}
 
 	public Iterable<Productcategory> findAllCategories() {
