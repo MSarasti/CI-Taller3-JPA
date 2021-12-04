@@ -120,11 +120,9 @@ public class OperatorControllerImpl {
 	
 	@GetMapping("/specialoffer/edit/{id}")
 	public String editSO(@PathVariable("id") Integer id, Model model) {
-		Optional<Specialoffer> so = soService.findById(id);
-		if (so.isEmpty())
-			throw new IllegalArgumentException("Invalid special offer Id:" + id);
+		Specialoffer so = soService.findById(id);
 		
-		model.addAttribute("specialoffer", so.get());
+		model.addAttribute("specialoffer", so);
 		return "operator/editSO";
 	}
 	
@@ -132,7 +130,7 @@ public class OperatorControllerImpl {
 	public String updateSO(@PathVariable("id") Integer id, @Validated(updateValidation.class) Specialoffer specialoffer, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("specialoffer", soService.findById(id).get());
+				model.addAttribute("specialoffer", soService.findById(id));
 				return "operator/editSO";
 			}
 			specialoffer.setSpecialofferid(id);
@@ -143,11 +141,9 @@ public class OperatorControllerImpl {
 	
 	@GetMapping("/specialofferproduct/edit/{id}")
 	public String editSOP(@PathVariable("id") SpecialofferproductPK id, Model model) {
-		Optional<Specialofferproduct> so = sopService.findById(id);
-		if (so.isEmpty())
-			throw new IllegalArgumentException("Invalid special offer product Id:" + id);
+		Specialofferproduct so = sopService.findById(id);
 		
-		model.addAttribute("specialoffer", so.get());
+		model.addAttribute("specialoffer", so);
 		return "operator/editSOP";
 	}
 	
@@ -155,7 +151,7 @@ public class OperatorControllerImpl {
 	public String updateSOP(@PathVariable("id") SpecialofferproductPK id, @Validated(updateValidation.class) Specialofferproduct specialofferproduct, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("specialofferproduct", sopService.findById(id).get());
+				model.addAttribute("specialofferproduct", sopService.findById(id));
 				return "operator/editSOP";
 			}
 			specialofferproduct.setId(id);
@@ -165,23 +161,21 @@ public class OperatorControllerImpl {
 	}
 	
 	@GetMapping("/salesorderdetail/edit/{id}")
-	public String editSOD(@PathVariable("id") SalesorderdetailPK id, Model model) {
-		Optional<Salesorderdetail> so = sodService.findById(id);
-		if (so.isEmpty())
-			throw new IllegalArgumentException("Invalid order detail Id:" + id);
+	public String editSOD(@PathVariable("id") Integer id, Model model) {
+		Salesorderdetail so = sodService.findById(id);
 		
-		model.addAttribute("salesorderdetail", so.get());
+		model.addAttribute("salesorderdetail", so);
 		return "operator/editSOD";
 	}
 	
 	@PostMapping("/salesorderdetail/edit/{id}")
-	public String updateSOD(@PathVariable("id") SalesorderdetailPK id, @Validated(updateValidation.class) Salesorderdetail salesorderdetail, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String updateSOD(@PathVariable("id") Integer id, @Validated(updateValidation.class) Salesorderdetail salesorderdetail, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("salesorderdetail", sodService.findById(id).get());
+				model.addAttribute("salesorderdetail", sodService.findById(id));
 				return "operator/editSOD";
 			}
-			salesorderdetail.setId(id);
+			salesorderdetail.setSalesOrderDetailId(id);
 			sodService.updateSalesOrderDetail(id, salesorderdetail);
 		}
 		return "redirect:/salesorderdetail";
@@ -200,7 +194,7 @@ public class OperatorControllerImpl {
 	}
 	
 	@GetMapping("/salesorderdetail/delete/{id}")
-	public String deleteSOD(@PathVariable("id") SalesorderdetailPK id, Model model) {
+	public String deleteSOD(@PathVariable("id") Integer id, Model model) {
 		sodService.deleteSalesOrderDetail(id);
 		return "redirect:/salesorderdetail";
 	}

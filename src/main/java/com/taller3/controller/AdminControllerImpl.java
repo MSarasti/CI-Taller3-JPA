@@ -120,11 +120,8 @@ public class AdminControllerImpl {
 	
 	@GetMapping("/product/edit/{id}")
 	public String editProduct(@PathVariable("id") Integer id, Model model) {
-		Optional<Product> product = pService.findById(id);
-		if (product.isEmpty())
-			throw new IllegalArgumentException("Invalid product Id:" + id);
-		
-		model.addAttribute("prod", product.get());
+		Product product = pService.findById(id);
+		model.addAttribute("prod", product);
 		model.addAttribute("cats", pService.findAllCategories());
 		model.addAttribute("subs", pService.findAllSubcategories());
 		model.addAttribute("units", pService.findAllUnits());
@@ -135,7 +132,7 @@ public class AdminControllerImpl {
 	public String updateProduct(@PathVariable("id") Integer id, @Validated(updateValidation.class) Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("prod", pService.findById(id).get());
+				model.addAttribute("prod", pService.findById(id));
 				model.addAttribute("cats", pService.findAllCategories());
 				model.addAttribute("subs", pService.findAllSubcategories());
 				model.addAttribute("units", pService.findAllUnits());
@@ -149,10 +146,6 @@ public class AdminControllerImpl {
 	
 	@GetMapping("/product/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id, Model model) {
-		Optional<Product> product = pService.findById(id);
-		if (product.isEmpty())
-			throw new IllegalArgumentException("Invalid product Id:" + id);
-		
 		pService.deleteProduct(id);
 		return "redirect:/product";
 	}

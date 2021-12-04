@@ -149,10 +149,10 @@ public class ProductTests {
 		public void testAddProductWithProductNumberAsAString() {
 			prod.setProductnumber("A");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now());
+			prod.setSellenddate(LocalDate.now().plusWeeks(1));
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -164,10 +164,10 @@ public class ProductTests {
 		public void testAddProductWithDaysManufactureLessThan1() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(0);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now());
+			prod.setSellenddate(LocalDate.now().plusWeeks(1));
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -179,10 +179,10 @@ public class ProductTests {
 		public void testAddProductWithEndDateBeforeStartDate() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()+100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now());
+			prod.setSellenddate(LocalDate.now().minusWeeks(1));
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -197,7 +197,7 @@ public class ProductTests {
 			prod.setSellstartdate(null);
 			prod.setSellenddate(null);
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -210,9 +210,9 @@ public class ProductTests {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
 			prod.setSellstartdate(null);
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()+100));
+			prod.setSellenddate(LocalDate.now().plusWeeks(1));
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -224,10 +224,10 @@ public class ProductTests {
 		public void testAddProductWithNullSellEndDate() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
+			prod.setSellstartdate(LocalDate.now());
 			prod.setSellenddate(null);
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenThrow(Exception.class);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenThrow(Exception.class);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -239,10 +239,10 @@ public class ProductTests {
 		public void testAddProductCorrectly() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now());
+			prod.setSellenddate(LocalDate.now().plusWeeks(1));
 			try {
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenReturn(prod);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenReturn(prod);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -257,12 +257,12 @@ public class ProductTests {
 		public void setUpEdit() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now());
+			prod.setSellenddate(LocalDate.now().plusWeeks(1));
 			try {
 				//System.out.println(prodCat.getProductcategoryid());
 				//System.out.println(pCatRep.findById(0).get());
-				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1)).thenReturn(prod);
+				Mockito.when(prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode())).thenReturn(prod);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -349,8 +349,8 @@ public class ProductTests {
 		@DisplayName("Edit an existing product's sell start and end date (End before Start), throws exception")
 		public void testEditProductSellDatesBad2() {
 			Product toChange = prod;
-			toChange.setSellenddate(new Timestamp(System.currentTimeMillis()-1000));
-			toChange.setSellstartdate(new Timestamp(System.currentTimeMillis()+1000));
+			toChange.setSellenddate(LocalDate.now().minusWeeks(2));
+			toChange.setSellstartdate(LocalDate.now());
 			try {
 				Mockito.when(prodServ.updateProduct(1, toChange)).thenThrow(Exception.class);
 			} catch (Exception e) {
@@ -364,7 +364,7 @@ public class ProductTests {
 		public void testEditProductSellDatesBad3() {
 			Product toChange = prod;
 			toChange.setSellenddate(null);
-			toChange.setSellstartdate(new Timestamp(System.currentTimeMillis()));
+			toChange.setSellstartdate(LocalDate.now().plusWeeks(1));
 			try {
 				Mockito.when(prodServ.updateProduct(1, toChange)).thenThrow(Exception.class);
 			} catch (Exception e) {
@@ -377,7 +377,7 @@ public class ProductTests {
 		@DisplayName("Edit an existing product's sell start and end date (Start is null), throws exception")
 		public void testEditProductSellDatesBad4() {
 			Product toChange = prod;
-			toChange.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			toChange.setSellenddate(LocalDate.now().plusWeeks(1));
 			toChange.setSellstartdate(null);
 			try {
 				Mockito.when(prodServ.updateProduct(1, toChange)).thenThrow(Exception.class);
@@ -391,8 +391,8 @@ public class ProductTests {
 		@DisplayName("Edit an existing product's sell start and end date")
 		public void testEditProductSellDatesCorrect() {
 			Product toChange = prod;
-			toChange.setSellenddate(new Timestamp(System.currentTimeMillis()+1000));
-			toChange.setSellstartdate(new Timestamp(System.currentTimeMillis()-1000));
+			toChange.setSellenddate(LocalDate.now().plusWeeks(3));
+			toChange.setSellstartdate(LocalDate.now().minusWeeks(1));
 			try {
 				Mockito.when(prodServ.updateProduct(1, toChange)).thenReturn(toChange);
 			} catch (Exception e) {
