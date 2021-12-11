@@ -1,4 +1,4 @@
-package com.taller1.IntegrationTests;
+package com.taller3.IntegrationTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 

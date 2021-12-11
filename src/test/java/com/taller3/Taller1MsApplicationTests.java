@@ -1,4 +1,4 @@
-package com.taller1;
+package com.taller3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

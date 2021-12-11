@@ -1,41 +1,28 @@
-package com.taller1.UnitTests;
+package com.taller3.IntegrationTests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.*;
-import org.mockito.*;
-import org.mockito.junit.jupiter.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.taller3.model.prod.*;
 import com.taller3.model.sales.*;
-import com.taller3.repository.*;
-import com.taller3.service.implementation.*;
+import com.taller3.service.interfaces.*;
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 public class SpecialOfferProductTests {/*
-	@Mock
-	public ProductRepository pRep;
-	@Mock
-	public SpecialofferRepository soRep;
-	@Mock
-	public SpecialofferproductRepository sopRep;
+	@Autowired
+	public SpecialofferproductService sopServ;
 	
-	@InjectMocks
-	public SpecialOfferProductServiceImpl sopServ;
+	@Autowired
+	public SpecialofferService soServ;
 	
-	@InjectMocks
-	public ProductServiceImpl prodServ;
-	
-	@InjectMocks
-	public SpecialOfferServiceImpl soServ;
+	@Autowired
+	public ProductService prodServ;
 	
 	public Specialofferproduct sop;
 	
@@ -91,81 +78,46 @@ public class SpecialOfferProductTests {/*
 		@Test
 		@DisplayName("Add a null SpecialOfferProduct, throws exception")
 		public void addSOPNull() {
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(null, 1, 1)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(null, 1, 1));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct with no product, throws exception")
 		public void addSOPWithNoProduct() {
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(sop, 0, 1)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(sop, 0, 1));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct with no Specialoffer, throws exception")
 		public void addSOPWithNoSO() {
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(sop, 1, 0)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(sop, 1, 0));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct with null modified date, throws exception")
 		public void addSOPWithNullModDate() {
 			sop.setModifieddate(null);
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(sop, 1, 1)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(sop, 1, 1));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct with null modified date, throws exception")
 		public void addSOPWithBeforeModDate() {
 			sop.setModifieddate(new Timestamp(System.currentTimeMillis()-100000));
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(sop, 1, 1)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(sop, 1, 1));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct with null modified date, throws exception")
 		public void addSOPWithAfterModDate() {
 			sop.setModifieddate(new Timestamp(System.currentTimeMillis()+100000));
-			try {
-				Mockito.when(sopServ.saveSpecialOfferProduct(sop, 1, 1)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoInteractions(sopRep);
+			assertThrows(Exception.class, () -> sopServ.saveSpecialOfferProduct(sop, 1, 1));
 		}
 		
 		@Test
 		@DisplayName("Add SpecialOfferProduct correctly")
 		public void addSOPCorrectly() {
-			try {
-				lenient().when(sopServ.saveSpecialOfferProduct(sop, 1, 1)).thenReturn(sop);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verifyNoMoreInteractions(sopRep);
+			assertDoesNotThrow(() -> sopServ.saveSpecialOfferProduct(sop, 1, 1));
 		}
 	}
 	
@@ -181,61 +133,37 @@ public class SpecialOfferProductTests {/*
 		@Test
 		@DisplayName("Edit an existing SpecialOfferProduct to null, throws exception")
 		public void editSOPToNull() {
-			try {
-				Mockito.when(sopServ.updateSpecialOfferProduct(sopKey, null)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verify(sopRep).findById(sopKey);
+			assertThrows(Exception.class, () -> sopServ.updateSpecialOfferProduct(sopKey, null));
 		}
 		
 		@Test
 		@DisplayName("Edit an existing SpecialOfferProduct's modified date to null, throws exception")
 		public void editSOPWithNullModDate() {
 			sop.setModifieddate(null);
-			try {
-				Mockito.when(sopServ.updateSpecialOfferProduct(sopKey, sop)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verify(sopRep).findById(sopKey);
+			assertThrows(Exception.class, () -> sopServ.updateSpecialOfferProduct(sopKey, sop));
 		}
 		
 		@Test
 		@DisplayName("Edit an existing SpecialOfferProduct's modified date to null, throws exception")
 		public void editSOPWithBeforeModDate() {
 			sop.setModifieddate(new Timestamp(System.currentTimeMillis()-100000));
-			try {
-				Mockito.when(sopServ.updateSpecialOfferProduct(sopKey, sop)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verify(sopRep).findById(sopKey);
+			assertThrows(Exception.class, () -> sopServ.updateSpecialOfferProduct(sopKey, sop));
 		}
 		
 		@Test
 		@DisplayName("Edit an existing SpecialOfferProduct's modified date to null, throws exception")
 		public void editSOPWithAfterModDate() {
 			sop.setModifieddate(new Timestamp(System.currentTimeMillis()+100000));
-			try {
-				Mockito.when(sopServ.updateSpecialOfferProduct(sopKey, sop)).thenThrow(Exception.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verify(sopRep).findById(sopKey);
+			assertThrows(Exception.class, () -> sopServ.updateSpecialOfferProduct(sopKey, sop));
 		}
 		
 		@Test
 		@DisplayName("Edit an existing SpecialOfferProduct correctly")
 		public void editSOPCorrectly() {
 			sop.setRowguid(2);
-			try {
-				Mockito.when(sopServ.updateSpecialOfferProduct(sopKey, sop)).thenReturn(sop);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			verify(sopRep).findById(sopKey);
+			assertDoesNotThrow(() -> sopServ.updateSpecialOfferProduct(sopKey, sop));
+			assertEquals(2, sopServ.searchSpecialOfferProduct(sopKey).getRowguid());
 		}
-	}
-	*/
+	}*/
+	
 }

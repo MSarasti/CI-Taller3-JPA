@@ -1,9 +1,10 @@
-package com.taller1.IntegrationTests;
+package com.taller3.IntegrationTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
@@ -19,11 +20,13 @@ import com.taller3.service.implementation.*;
 import com.taller3.service.interfaces.ProductService;
 
 @SpringBootTest
-public class ProductTests {/*
+public class ProductTests {
 	@Autowired
 	public ProductService prodServ;
 	
 	public Unitmeasure unit1;
+	
+	public Unitmeasure unit2;
 	
 	public Productcategory prodCat;
 	
@@ -37,9 +40,13 @@ public class ProductTests {/*
 		prodCat = new Productcategory();
 		prodSub = new Productsubcategory();
 		unit1 = new Unitmeasure();
-		unit1.setUnitmeasurecode("1");
+		unit2 = new Unitmeasure();
+		unit1.setUnitmeasurecode(1);
 		unit1.setModifieddate(new Timestamp(System.currentTimeMillis()));
-		unit1.setName("Name Unit");
+		unit1.setName("Name Unit 1");
+		unit2.setUnitmeasurecode(2);
+		unit2.setModifieddate(new Timestamp(System.currentTimeMillis()));
+		unit2.setName("Name Unit 2");
 		prodCat.setProductcategoryid(1);
 		prodCat.setName("Name Category");
 		prodCat.setModifieddate(new Timestamp(System.currentTimeMillis()));
@@ -67,13 +74,13 @@ public class ProductTests {/*
 		@Test
 		@DisplayName("Add null product, throws exception")
 		public void testAddNullProduct() {
-			assertThrows(Exception.class, () -> prodServ.saveProduct(null, null, null, null));
+			assertThrows(Exception.class, () -> prodServ.saveProduct(null, null, null, null, null));
 		}
 		
 		@Test
 		@DisplayName("Add a product without a category, throws exception")
 		public void testAddProductWithoutCategory() {
-			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, null, prodSub.getProductsubcategoryid(), unit1));
+			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, null, prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode()));
 		}
 		
 		@Test
@@ -81,9 +88,9 @@ public class ProductTests {/*
 		public void testAddProductWithNumberLessThan1() {
 			prod.setProductnumber("0");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
-			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1));
+			prod.setSellstartdate(LocalDate.now().minusDays(10));
+			prod.setSellenddate(LocalDate.now());
+			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode()));
 		}
 		
 		@Test
@@ -91,9 +98,9 @@ public class ProductTests {/*
 		public void testAddProductWithEndDateBeforeStartDate() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()+100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
-			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1));
+			prod.setSellstartdate(LocalDate.now().plusDays(10));
+			prod.setSellenddate(LocalDate.now());
+			assertThrows(Exception.class, () -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode()));
 		}
 		
 		@Test
@@ -101,9 +108,9 @@ public class ProductTests {/*
 		public void testAddProductCorrectly() {
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()+100));
-			assertDoesNotThrow(() -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1));
+			prod.setSellstartdate(LocalDate.now().minusDays(10));
+			prod.setSellenddate(LocalDate.now().plusDays(10));
+			assertDoesNotThrow(() -> prodServ.saveProduct(prod, prodCat.getProductcategoryid(), prodSub.getProductsubcategoryid(), unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode()));
 			assertEquals(prod.getProductid(), prodServ.searchProduct(1).getProductid());
 			assertEquals(prod.getSellstartdate(), prodServ.searchProduct(1).getSellstartdate());
 		}
@@ -123,10 +130,10 @@ public class ProductTests {/*
 			
 			prod.setProductnumber("1");
 			prod.setDaystomanufacture(1);
-			prod.setSellstartdate(new Timestamp(System.currentTimeMillis()-100));
-			prod.setSellenddate(new Timestamp(System.currentTimeMillis()));
+			prod.setSellstartdate(LocalDate.now().minusDays(10));
+			prod.setSellenddate(LocalDate.now());
 			try {
-				prodServ.saveProduct(prod, 1, 1, unit1);
+				prodServ.saveProduct(prod, 1, 1, unit1.getUnitmeasurecode(), unit2.getUnitmeasurecode());
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -178,12 +185,11 @@ public class ProductTests {/*
 		@DisplayName("Edit an existing product's sell start and end date")
 		public void testEditProductSellDatesCorrect() {
 			Product toChange = prod;
-			toChange.setSellenddate(new Timestamp(System.currentTimeMillis()+1000));
-			toChange.setSellstartdate(new Timestamp(System.currentTimeMillis()-1000));
+			toChange.setSellenddate(LocalDate.now().plusDays(15));
+			toChange.setSellstartdate(LocalDate.now().minusDays(3));
 			assertDoesNotThrow(() -> prodServ.updateProduct(1, toChange));
 			assertEquals(toChange.getSellstartdate(), prodServ.searchProduct(1).getSellstartdate());
 		}
 		
-		
-	}*/
+	}
 }

@@ -1,15 +1,15 @@
-package com.taller1.IntegrationTests;
+package com.taller3.UnitTests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.taller3.model.prod.*;
@@ -18,11 +18,20 @@ import com.taller3.repository.*;
 import com.taller3.service.implementation.*;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class SalesOrderDetailTests {/*
 	@Mock
 	public ProductRepository pRep;
+	
+	@Mock
+	public ProductCategoryRepository pCRep;
+	
+	@Mock
+	public ProductSubcategoryRepository pSRep;
+	
 	@Mock
 	public SpecialofferRepository soRep;
+	
 	@Mock
 	public SalesorderdetailRepository sodRep;
 	
@@ -94,8 +103,7 @@ public class SalesOrderDetailTests {/*
 		@DisplayName("Add a null SalesOrderDetail, throws exception")
 		public void testAddSODNull() {
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(null, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(null, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -106,8 +114,7 @@ public class SalesOrderDetailTests {/*
 		@DisplayName("Add a SalesOrderDetail with no product, throws exception")
 		public void testAddSODWithNoProduct() {
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 0, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 0, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -118,8 +125,7 @@ public class SalesOrderDetailTests {/*
 		@DisplayName("Add a SalesOrderDetail with no SpecialOffer, throws exception")
 		public void testAddSODWithNoSO() {
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 0);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 0)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -131,8 +137,7 @@ public class SalesOrderDetailTests {/*
 		public void testAddSODWithNullUP() {
 			sod.setUnitprice(null);
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -144,8 +149,7 @@ public class SalesOrderDetailTests {/*
 		public void testAddSODWithUPLessThan0() {
 			sod.setUnitprice(BigDecimal.valueOf(-1));
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -157,8 +161,7 @@ public class SalesOrderDetailTests {/*
 		public void testAddSODWithUPAs0() {
 			sod.setUnitprice(BigDecimal.valueOf(0));
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -170,8 +173,7 @@ public class SalesOrderDetailTests {/*
 		public void testAddSODWithNullUPD() {
 			sod.setUnitpricediscount(null);
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -183,8 +185,7 @@ public class SalesOrderDetailTests {/*
 		public void testAddSODWithUPDLessThan0() {
 			sod.setUnitpricediscount(BigDecimal.valueOf(-1));
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenThrow(Exception.class);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				Mockito.when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -195,12 +196,11 @@ public class SalesOrderDetailTests {/*
 		@DisplayName("Add a SalesOrderDetail correctly")
 		public void testAddSOPCorrectly() {
 			try {
-				Mockito.when(sodServ.saveSalesOrderDetail(any(Salesorderdetail.class), any(Integer.class), any(Integer.class))).thenReturn(sod);
-				sodServ.saveSalesOrderDetail(sod, 1, 1);
+				lenient().when(sodServ.saveSalesOrderDetail(sod, 1, 1)).thenReturn(sod);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoMoreInteractions(sodRep);
+			verifyNoInteractions(sodRep);
 		}
 	}
 	
@@ -211,12 +211,11 @@ public class SalesOrderDetailTests {/*
 		@DisplayName("Edit an existing SOD to null, throws exception")
 		public void testEditSODToNull() {
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, null);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, null)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -224,12 +223,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODWithNullUP() {
 			sod.setUnitprice(null);
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -237,12 +235,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODWithNegativeUP() {
 			sod.setUnitprice(BigDecimal.valueOf(-1));
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -250,12 +247,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODWithUPAs0() {
 			sod.setUnitprice(BigDecimal.valueOf(0));
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -263,12 +259,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODWithNullUPD() {
 			sod.setUnitpricediscount(null);
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -276,12 +271,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODWithNegativeUPD() {
 			sod.setUnitpricediscount(BigDecimal.valueOf(-1));
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenThrow(Exception.class);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				Mockito.when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenThrow(Exception.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 		
 		@Test
@@ -289,12 +283,11 @@ public class SalesOrderDetailTests {/*
 		public void testEditSODCorrectly() {
 			sod.setRowguid(5);
 			try {
-				Mockito.when(sodServ.updateSalesOrderDetail(any(SalesorderdetailPK.class), any(Salesorderdetail.class))).thenReturn(sod);
-				sodServ.updateSalesOrderDetail(sodPK, sod);
+				lenient().when(sodServ.updateSalesOrderDetail(sodPK, sod)).thenReturn(sod);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			verifyNoMoreInteractions(sodRep);
+			verify(sodRep).findById(sodPK);
 		}
 	}*/
 }
