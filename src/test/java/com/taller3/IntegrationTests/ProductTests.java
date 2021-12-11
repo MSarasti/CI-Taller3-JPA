@@ -12,14 +12,18 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.taller3.Taller3MsApplication;
 import com.taller3.model.prod.*;
 import com.taller3.repository.*;
 import com.taller3.service.implementation.*;
 import com.taller3.service.interfaces.ProductService;
 
 @SpringBootTest
+@ContextConfiguration(classes = Taller3MsApplication.class)
+@ExtendWith(SpringExtension.class)
 public class ProductTests {
 	@Autowired
 	public ProductService prodServ;

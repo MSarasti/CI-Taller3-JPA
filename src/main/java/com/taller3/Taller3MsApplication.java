@@ -1,5 +1,6 @@
 package com.taller3;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
@@ -123,6 +124,18 @@ public class Taller3MsApplication {
 			
 			Specialofferproduct sop = new Specialofferproduct();
 			sop.setModifieddate(LocalDate.now());
+			sop.setSpecialoffer(so);
+			so.addSpecialofferproduct(sop);
+			
+			Salesorderdetail sod = new Salesorderdetail();
+			sod.setUnitprice(BigDecimal.valueOf(0.5));
+			sod.setUnitpricediscount(BigDecimal.ZERO);
+			sod.setSpecialofferproduct(sop);
+			sop.addSalesorderdetail(sod);
+			
+			soDao.save(so);
+			sopDao.save(sop);
+			sodDao.save(sod);
 		};
 	}
 }

@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.taller3.dao.interfaces.SalesOrderDetailDao;
 import com.taller3.model.sales.Salesorderdetail;
 
 @Repository
-@Transactional
 public class SalesOrderDetailDaoImpl implements SalesOrderDetailDao {
 	@PersistenceContext
 	private EntityManager entityManager;

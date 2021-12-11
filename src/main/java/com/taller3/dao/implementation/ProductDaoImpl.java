@@ -12,7 +12,6 @@ import com.taller3.dao.interfaces.ProductDao;
 import com.taller3.model.prod.Product;
 
 @Repository
-@Transactional
 public class ProductDaoImpl implements ProductDao {
 	@PersistenceContext
 	private EntityManager entityManager;

@@ -5,13 +5,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.taller3.dao.interfaces.*;
 import com.taller3.model.sales.*;
 
 @Repository
-@Transactional
 public class SpecialOfferProductDaoImpl implements SpecialOfferProductDao {
 	@PersistenceContext
 	private EntityManager entityManager;
