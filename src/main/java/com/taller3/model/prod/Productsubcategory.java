@@ -2,6 +2,7 @@ package com.taller3.model.prod;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -55,6 +56,9 @@ public class Productsubcategory implements Serializable {
 	}
 
 	public Product addProduct(Product product) {
+		if(this.products==null) {
+			this.products = new ArrayList<>();
+		}
 		getProducts().add(product);
 		product.setProductsubcategory(this);
 

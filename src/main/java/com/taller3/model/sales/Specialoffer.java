@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -67,6 +68,9 @@ public class Specialoffer implements Serializable {
 	}
 
 	public Specialofferproduct addSpecialofferproduct(Specialofferproduct specialofferproduct) {
+		if(this.specialofferproducts==null) {
+			this.specialofferproducts = new ArrayList<>();
+		}
 		getSpecialofferproducts().add(specialofferproduct);
 		specialofferproduct.setSpecialoffer(this);
 

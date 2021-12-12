@@ -3,6 +3,7 @@ package com.taller3.model.sales;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EmbeddedId;
@@ -56,6 +57,9 @@ public class Specialofferproduct implements Serializable {
 	}
 
 	public Salesorderdetail addSalesorderdetail(Salesorderdetail salesorderdetail) {
+		if(this.salesorderdetails==null) {
+			this.salesorderdetails = new ArrayList<>();
+		}
 		getSalesorderdetails().add(salesorderdetail);
 		salesorderdetail.setSpecialofferproduct(this);
 
