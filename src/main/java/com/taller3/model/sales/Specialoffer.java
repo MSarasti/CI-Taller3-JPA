@@ -18,20 +18,24 @@ import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.taller3.model.prod.Product;
 import com.taller3.model.validation.*;
+
+import lombok.Data;
 
 /**
  * The persistent class for the specialoffer database table.
  *
  */
 @Entity
+@Data
 @NamedQuery(name = "Specialoffer.findAll", query = "SELECT s FROM Specialoffer s")
 public class Specialoffer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "SPECIALOFFER_SPECIALOFFERID_GENERATOR", allocationSize = 1, sequenceName = "SPECIALOFFER_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SPECIALOFFER_SPECIALOFFERID_GENERATOR")
+	@SequenceGenerator(name="SPECIALOFFER_SPECIALOFFERID_GENERATOR", sequenceName="SPECIALOFFER_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SPECIALOFFER_SPECIALOFFERID_GENERATOR")
 	private Integer specialofferid;
 
 	@NotBlank(groups={addValidation.class, updateValidation.class}, message="Category cannot be blank")

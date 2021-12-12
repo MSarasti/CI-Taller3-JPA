@@ -121,8 +121,13 @@ public class Taller3MsApplication {
 			Specialoffer so = new Specialoffer();
 			so.setCategory("Cat 1");
 			so.setModifieddate(LocalDate.now());
+			System.out.println("Special offer ID = "+so.getSpecialofferid());
 			
 			Specialofferproduct sop = new Specialofferproduct();
+			SpecialofferproductPK sopPK = new SpecialofferproductPK();
+			sopPK.setProductid(p1.getProductid());
+			sopPK.setSpecialofferid(so.getSpecialofferid());
+			sop.setId(sopPK);
 			sop.setModifieddate(LocalDate.now());
 			sop.setSpecialoffer(so);
 			so.addSpecialofferproduct(sop);
