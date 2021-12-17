@@ -15,7 +15,7 @@
 	</bean>
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="JPA-Inject"/>
+		<property name="persistenceUnitName" value="Taller"/>
 	</bean>
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -24,6 +24,5 @@
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:component-scan base-package="com" scoped-proxy="interfaces" />
-	
 	
 </beans>

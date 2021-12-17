@@ -43,6 +43,11 @@ public class UserControllerImpl {
 	public String loginPrincipal() {
 		return "/login";
 	}
+	
+	@GetMapping("/access-denied")
+	public String accessDenied() {
+		return "/access-denied";
+	}
 
 	@GetMapping("/users/add")
 	public String addUser(Model model) {
