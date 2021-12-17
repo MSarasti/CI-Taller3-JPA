@@ -1,5 +1,8 @@
 package com.taller3.service.interfaces;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.taller3.model.prod.*;
 
 public interface ProductService {
@@ -15,4 +18,16 @@ public interface ProductService {
 	public Productsubcategory searchProductSubcategory(Integer pscId);
 	public Productsubcategory updateProductSubcategory(Integer pscId, Productsubcategory psc);
 	public void deleteProductSubcategory(Integer pscId);
+	public Unitmeasure saveUnitmeasure(Unitmeasure um);
+	public Unitmeasure searchUnitmeasure(Integer umId);
+	public void deleteUnitmeasure(Integer umId);
+	public Product findById(Integer id);
+	public Product findByProductNumber(String productnumber);
+	public Iterable<Product> findByStyle(String style);
+	public Iterable<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate);
+	public Iterable<Product> findAllProducts();
+	public Iterable<String> findAllProductnumbers();
+	public Iterable<Productcategory> findAllCategories();
+	public Iterable<Productsubcategory> findAllSubcategories();
+	public Iterable<Unitmeasure> findAllUnits();
 }

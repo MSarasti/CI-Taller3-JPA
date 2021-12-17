@@ -1,8 +1,11 @@
 package com.taller3.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -148,5 +151,50 @@ public class AdminControllerImpl {
 	public String deleteProduct(@PathVariable("id") Integer id, Model model) {
 		pService.deleteProduct(id);
 		return "redirect:/product";
+	}
+	
+	@GetMapping("/product/get/productnumber/")
+	public String queryProductNumberGet(@RequestParam("productnumber") String productnumber, Model model) {
+		return "admin/prodBaseQuery";
+	}
+	
+	@PostMapping("/product/get/productnumber")
+	public String queryProductNumberPost(@RequestParam("productnumber") String productnumber, Model model) {
+		if(!productnumber.isBlank()) {
+			ArrayList<Product> list = new ArrayList<>();
+			list.add(pService.findByProductNumber(productnumber));
+			Iterable<Product> iter =  list;
+			model.addAttribute("products", iter);
+			return "admin/prodBaseQuery";
+		}else
+			return "redirect:/product";
+	}
+	
+	@GetMapping("/product/get/style/")
+	public String queryStyleGet(@RequestParam("style") String style, Model model) {
+		return "admin/prodBaseQuery";
+	}
+	
+	@PostMapping("/product/get/style")
+	public String queryStylePost(@RequestParam("style") String style, Model model) {
+		if(!style.isBlank()) {
+			model.addAttribute("products", pService.findByStyle(style));
+			return "admin/prodBaseQuery";
+		}else
+			return "redirect:/product";
+	}
+	
+	@GetMapping("/product/sellstartdate/to/sellenddate")
+	public String queryDateRangeGet(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model) {
+		return "admin/prodDateRangeQuery";
+	}
+	
+	@PostMapping("/product/sellstartdate/to/sellenddate")
+	public String queryDateRangePost(@RequestParam("sellstartdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellstartdate, @RequestParam("sellenddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sellenddate, Model model, @RequestParam(value = "action", required = true) String action) {
+		if(sellstartdate!=null && sellenddate!=null && sellstartdate.isBefore(sellenddate)) {
+			model.addAttribute("products", pService.findByDateRange(sellstartdate, sellenddate));
+			return "admin/prodDateRangeQuery";
+		}else
+			return "redirect:/product";
 	}
 }

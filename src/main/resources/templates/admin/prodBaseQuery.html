@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Products</title>
+<title>Product Queries</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -21,7 +21,7 @@
 			<div class="col-md-6">
 				<h2 th:case="null">There are no products</h2>
 				<div th:case="*">
-					<h2 class="my-5">Products</h2>
+					<h2 class="my-5">Products found</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
@@ -31,6 +31,7 @@
 								<th>Days to manufacture</th>
 								<th>Sell start date</th>
 								<th>Sell end date</th>
+								<th>Style</th>
 								<th>Product Category</th>
 								<th>Product Subcategory</th>
 								<th>Unit measure 1</th>
@@ -47,6 +48,7 @@
 								<td th:text="${prod.daystomanufacture}"></td>
 								<td th:text="${prod.sellstartdate}"></td>
 								<td th:text="${prod.sellenddate}"></td>
+								<td th:text="${prod.style}"></td>
 								<td th:text="${prod.productsubcategory.productcategory.name}"></td>
 								<td th:text="${prod.productsubcategory.name}"></td>
 								<td th:text="${prod.unitmeasure1.name}"></td>
@@ -60,30 +62,7 @@
 					</table>
 				</div>
 				<p>
-					<a href="/product/add" class="btn btn-primary"><i
-						class="fas fa-user-plus ml-2"></i> Add a product</a>
-				</p>
-				<p>
-					<label for="productnumber" class="col-form-label">Product Number</label> <input
-								type="text" th:name="productnumber" class="form-control" id="productnumber"
-								placeholder="Number"> 
-					<a th:href="@{/product/get/productnumber}" class="btn btn-primary"><i class="fa fa-search"></i>Search for a product with a given product number</a>	
-				</p>
-				<p>
-					<label for="style" class="col-form-label">Style</label> <input
-								type="text" th:name="style" class="form-control" id="style"
-								placeholder="Style"> 
-					<a th:href="@{/product/get/style}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
-				</p>
-				<p>
-					<label for="pStartQuery" class="col-form-label">From</label> <input
-								type="date" th:name="sellstartdate" class="form-control" id="pStartQuery">
-					<label for="pEndQuery" class="col-form-label">To</label> <input
-								type="date" th:name="sellenddate" class="form-control" id="pEndQuery"> 
-					<a th:href="@{/product/sellstartdate/to/sellenddate}" class="btn btn-primary"><i class="fa fa-search"></i>Search for products with a given style</a>	
-				</p>
-				<p>
-					<a href="/admin/"><i class="fas fa-user-edit ml-2"></i> Go to Admin Menu</a>
+					<a href="/product/"><i class="fas fa-user-edit ml-2"></i> Go to Product Menu</a>
 				</p>
 			</div>
 		</div>

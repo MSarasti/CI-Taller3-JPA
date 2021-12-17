@@ -1,5 +1,6 @@
 package com.taller3.service.implementation;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,6 +168,22 @@ public class ProductServiceImpl implements ProductService {
 	
 	public Product findById(Integer id){
 		return pDao.findById(id);
+	}
+	
+	public Product findByProductNumber(String productnumber) {
+		return pDao.findByProductNumber(productnumber);
+	}
+	
+	public Iterable<Product> findByStyle(String style) {
+		return pDao.findByStyle(style);
+	}
+	
+	public Iterable<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
+		return pDao.findByDateRange(sellstartdate, sellenddate);
+	}
+	
+	public Iterable<String> findAllProductnumbers() {
+		return pDao.findAllProductnumbers();
 	}
 	
 	public Iterable<Product> findAllProducts() {

@@ -70,12 +70,24 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	public void deleteSalesOrderDetail(Integer sdId) {
 		sodDao.delete(sodDao.findById(sdId));
 	}
+	
+	@Override
+	public Salesorderdetail findById(Integer id) {
+		return sodDao.findById(id);
+	}
 
+	@Override
 	public Iterable<Salesorderdetail> findAll(){
 		return sodDao.findAll();
 	}
-
-	public Salesorderdetail findById(Integer id) {
-		return sodDao.findById(id);
+	
+	@Override
+	public Iterable<Salesorderdetail> findByProductId(Integer pId) {
+		return sodDao.findByProductId(pId);
+	}
+	
+	@Override
+	public Iterable<Object[]> findOrderDetailByProductWithMoreThanOneSOP() {
+		return sodDao.findOrderDetailByProductWithMoreThanOneSOP();
 	}
 }
