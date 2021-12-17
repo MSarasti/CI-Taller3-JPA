@@ -39,10 +39,12 @@
 									th:selected="${specialofferproduct.pId=p.productid}"></option>
 							</select> 
 						</div>
-						<div style="display:none" class="form-group col-md-6">
-							<input
+						<div class="form-group col-md-6">
+							<label for="modifieddate" class="col-form-label">Modified date</label> <input
 								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
-								placeholder="01/01/2020" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="display:none;">
+								placeholder="modifieddate"> <span
+								th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
+								class="text-danger"></span>
 						</div>
 					</div>
 					<div class="row">
