@@ -23,7 +23,9 @@ import com.taller3.repository.*;
 @SpringBootTest
 @ContextConfiguration(classes = Taller3MsApplication.class)
 @ExtendWith(SpringExtension.class)
-public class SOTests {
+public class SOPTests {
+	@Autowired
+	public SpecialOfferProductDaoImpl sopDao;
 	@Autowired
 	public SpecialOfferDaoImpl soDao;
 	
@@ -50,6 +52,8 @@ public class SOTests {
 	public Product prod;
 	
 	public Specialoffer so;
+	
+	public Specialofferproduct sop;
 	
 	@BeforeEach
 	public void setUp1() {
@@ -87,68 +91,68 @@ public class SOTests {
 		prod.setProductsubcategory(prodSub);
 		
 		prodDao.save(prod);
+		
+		so = new Specialoffer();
+		so.setStartdate(LocalDate.now());
+		so.setEnddate(LocalDate.now().plusWeeks(3));
+		so.setCategory("Category");
+		so.setDiscountpct(BigDecimal.valueOf(0.5));
+		soDao.save(so);
+		
+		sop = new Specialofferproduct();
+		SpecialofferproductPK pk = new SpecialofferproductPK();
+		pk.setProductid(1);
+		pk.setSpecialofferid(1);
+		sop.setId(pk);
+		sop.setModifieddate(LocalDate.now());
+		sop.setSpecialoffer(so);
 	}
 	
 	@Nested
 	@DisplayName("Add special order tests")
-	class addSOTests{
+	class addSOPTests{
 		
 		@Test
-		@DisplayName("Adds a special order correctly")
-		public void testAddSOCorrectly() {
-			so = new Specialoffer();
-			so.setStartdate(LocalDate.now());
-			so.setEnddate(LocalDate.now().plusWeeks(3));
-			so.setCategory("Category");
-			so.setDiscountpct(BigDecimal.valueOf(0.5));
-			soDao.save(so);
-			so.setSpecialofferid(soDao.findAll().get(0).getSpecialofferid());
-			assertEquals(1, soDao.findAll().size());
+		@DisplayName("Adds a special order product correctly")
+		public void testAddSOPCorrectly() {
+			sopDao.save(sop);
+			assertEquals(1, sopDao.findAll().size());
 		}
 	}
 
 	@Nested
-	@DisplayName("Edit special order tests")
-	class editSOTests{
+	@DisplayName("Edit special order product tests")
+	class editSOPTests{
 		@Test
-		@DisplayName("Edit an existing special offer's category")
-		public void testEditSOCategory() {
-			so = soDao.findById(1);
-			so.setCategory("New Category");
-			soDao.update(so);
-			assertEquals(so.getCategory(), soDao.findById(1).getCategory());
+		@DisplayName("Edit an existing special offer product's modified date")
+		public void testEditSOPCategory() {
+			SpecialofferproductPK pk = new SpecialofferproductPK();
+			pk.setProductid(1);
+			pk.setSpecialofferid(1);
+			Specialofferproduct sop1 = sopDao.findById(pk);
+			sop1.setModifieddate(LocalDate.now().plusDays(5));
+			sopDao.update(sop1);
+			assertEquals(LocalDate.now().plusDays(5), sopDao.findById(pk).getModifieddate());
 		}
 	}
 	@Nested
-	@DisplayName("Find special offer tests")
-	class findSOTests{
+	@DisplayName("Find special offer product tests")
+	class findSOPTests{
 		@Test
-		@DisplayName("Find an existing special offer")
+		@DisplayName("Find an existing special offer product")
 		public void testFindSO() {
-			Specialoffer found = soDao.findById(1);
-			assertEquals("0.50", found.getDiscountpct().toString());
+			SpecialofferproductPK pk = new SpecialofferproductPK();
+			pk.setProductid(1);
+			pk.setSpecialofferid(1);
+			Specialofferproduct found = sopDao.findById(pk);
+			assertEquals(1, found.getSpecialoffer().getSpecialofferid());
 		}
 		
 		@Test
-		@DisplayName("Find all products")
+		@DisplayName("Find all special offer products")
 		public void testFindAllSO() {
-			List<Specialoffer> list = soDao.findAll();
-			assertEquals(3, list.size());
-		}
-		
-		@Test
-		@DisplayName("Find special offers by start date")
-		public void testFind() {
-			Specialoffer so1 = new Specialoffer();
-			so1.setCategory("Cat1");
-			so1.setStartdate(LocalDate.now());
-			Specialoffer so2 = new Specialoffer();
-			so2.setCategory("Cat1");
-			so2.setStartdate(LocalDate.now().plusDays(5));
-			soDao.save(so1);
-			soDao.save(so2);
-			List<Specialoffer> list = soDao.findByStartDate(LocalDate.now());
-			assertEquals(2, list.size());
+			List<Specialofferproduct> list = sopDao.findAll();
+			assertEquals(1, list.size());
 		}
 	}
 }
