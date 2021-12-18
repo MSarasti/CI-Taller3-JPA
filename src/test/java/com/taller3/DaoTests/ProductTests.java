@@ -3,24 +3,21 @@ package com.taller3.DaoTests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.test.context.*;
+import org.springframework.test.context.junit.jupiter.*;
 
-import com.taller3.Taller3MsApplication;
+import com.taller3.*;
 import com.taller3.dao.implementation.*;
 import com.taller3.model.prod.*;
-import com.taller3.repository.ProductCategoryRepository;
-import com.taller3.repository.ProductSubcategoryRepository;
-import com.taller3.repository.UnitmeasureRepository;
+import com.taller3.model.sales.*;
+import com.taller3.repository.*;
 
 @SpringBootTest
 @ContextConfiguration(classes = Taller3MsApplication.class)
