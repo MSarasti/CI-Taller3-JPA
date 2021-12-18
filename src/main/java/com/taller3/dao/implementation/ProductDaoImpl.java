@@ -52,7 +52,8 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	@Transactional
 	public Product findByProductNumber(String productnumber) {
-		return entityManager.find(Product.class, productnumber);
+		String jpql = "Select p from Product p WHERE p.productnumber =: productnumber";
+		return entityManager.createQuery(jpql, Product.class).setParameter("productnumber", productnumber).getSingleResult();
 	}
 
 	@Override

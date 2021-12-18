@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -103,10 +105,11 @@ public class ProductTests {
 	class editProductTests{
 		@BeforeEach
 		public void setUp2() {
-			prod.setProductnumber("1");
+			prod.setProductnumber("3");
 			prod.setDaystomanufacture(1);
 			prod.setSellstartdate(LocalDate.now().minusDays(10));
 			prod.setSellenddate(LocalDate.now().plusDays(10));
+			prod.setStyle("Cool");
 			prodDao.save(prod);
 		}
 		
@@ -138,6 +141,46 @@ public class ProductTests {
 			assertEquals(toChange.getSellstartdate(), prodDao.findById(prod.getProductid()).getSellstartdate());
 			assertEquals(toChange.getSellenddate(), prodDao.findById(prod.getProductid()).getSellenddate());
 		}
+	}
+	@Nested
+	@DisplayName("Find product tests")
+	class findProductTests{
+		@BeforeEach
+		public void setUp3() {
+			prod.setProductnumber("2");
+			prod.setDaystomanufacture(1);
+			prod.setSellstartdate(LocalDate.now().minusDays(10));
+			prod.setSellenddate(LocalDate.now().plusDays(10));
+			prod.setColor("Black");
+			prodDao.save(prod);
+		}
 		
+		@Test
+		@DisplayName("Find an existing product's name")
+		public void testFindProductName() {
+			Product prod = prodDao.findById(1);
+			assertEquals("Name Product", prod.getName());
+		}
+		
+		@Test
+		@DisplayName("Find all products")
+		public void testFindAllProducs() {
+			List<Product> list = prodDao.findAll();
+			assertEquals(5, list.size());
+		}
+		
+		@Test
+		@DisplayName("Find product by ProductNumber")
+		public void testFind() {
+			Product p = new Product();
+			p.setColor("Black");
+			p.setProductnumber("1000");
+			p.setDaystomanufacture(1);
+			p.setSellstartdate(LocalDate.now().minusDays(7));
+			p.setSellenddate(LocalDate.now().plusDays(7));
+			prodDao.save(p);
+			Product found = prodDao.findByProductNumber("1000");
+			assertEquals(p.getColor(), found.getColor());
+		}
 	}
 }
