@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -40,16 +41,21 @@ public class ProductTests {
 		prodSub = new Productsubcategory();
 		unit1 = new Unitmeasure();
 		unit2 = new Unitmeasure();
+		
 		unit1.setUnitmeasurecode(1);
 		unit1.setModifieddate(new Timestamp(System.currentTimeMillis()));
 		unit1.setName("Name Unit 1");
+		
 		unit2.setUnitmeasurecode(2);
 		unit2.setModifieddate(new Timestamp(System.currentTimeMillis()));
 		unit2.setName("Name Unit 2");
+		
 		prodCat.setName("Name Category");
 		prodCat.setModifieddate(new Timestamp(System.currentTimeMillis()));
+		
 		prodSub.setName("Name Subcategory");
 		prodSub.setModifieddate(new Timestamp(System.currentTimeMillis()));
+		
 		prod.setName("Name Product");
 		prod.setColor("Blue");
 		prod.setSize("Small");
@@ -61,19 +67,9 @@ public class ProductTests {
 		prod.setProductsubcategory(prodSub);
 	}
 	
-	@Test
-	public void test() {
-		assertTrue(true);
-	}
-	
 	@Nested
 	@DisplayName("Add product tests")
 	class addProductTests{
-		@Test
-		@DisplayName("Add null product, throws exception")
-		public void testAddNullProduct() {
-			assertThrows(Exception.class, () -> prodDao.save(null));
-		}
 		
 		@Test
 		@DisplayName("Adds a product correctly")
@@ -82,7 +78,7 @@ public class ProductTests {
 			prod.setDaystomanufacture(1);
 			prod.setSellstartdate(LocalDate.now().minusDays(10));
 			prod.setSellenddate(LocalDate.now().plusDays(10));
-			assertDoesNotThrow(() -> prodDao.save(prod));
+			prodDao.save(prod);
 			assertNotNull(prodDao.findById(prod.getProductid()));
 		}
 	}
@@ -128,6 +124,4 @@ public class ProductTests {
 		}
 		
 	}
-	
-	
 }

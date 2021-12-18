@@ -210,7 +210,7 @@ public class OperatorControllerImpl {
 	@PostMapping("/specialoffer/get/{startdate}")
 	public String querySOStartDatePost(@PathVariable("startdate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate, Model model) {
 		if(startdate!=null) {
-			model.addAttribute("specialoffers", soService.findByStartDate(Timestamp.valueOf(startdate.atStartOfDay())));
+			model.addAttribute("specialoffers", soService.findByStartDate(startdate));
 			return "operator/soQuery";
 		}else
 			return "redirect:/specialoffer";
@@ -225,7 +225,7 @@ public class OperatorControllerImpl {
 	@PostMapping("/specialoffer/get/{enddate}")
 	public String querySOEndDatePost(@PathVariable("enddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enddate, Model model) {
 		if(enddate!=null) {
-			model.addAttribute("specialoffers", soService.findByEndDate(Timestamp.valueOf(enddate.atStartOfDay())));
+			model.addAttribute("specialoffers", soService.findByEndDate(enddate));
 			return "operator/soQuery";
 		}else
 			return "redirect:/specialoffer";
