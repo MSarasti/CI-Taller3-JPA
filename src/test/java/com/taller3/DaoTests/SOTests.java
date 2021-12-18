@@ -130,7 +130,7 @@ public class SOTests {
 		}
 		
 		@Test
-		@DisplayName("Find all products")
+		@DisplayName("Find all special offers")
 		public void testFindAllSO() {
 			List<Specialoffer> list = soDao.findAll();
 			assertEquals(3, list.size());

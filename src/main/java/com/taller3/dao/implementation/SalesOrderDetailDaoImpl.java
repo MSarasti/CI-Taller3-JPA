@@ -52,11 +52,10 @@ public class SalesOrderDetailDaoImpl implements SalesOrderDetailDao {
 	@Override
 	@Transactional
 	public List<Salesorderdetail> findByProductId(Integer pId) {
-		String jpql = "Select s from Salesorderdetail s WHERE s.specialofferproduct.productid := pId";
+		String jpql = "Select s from Salesorderdetail s WHERE s.specialofferproduct.specialoffer.product.productid := pId";
 		return entityManager.createQuery(jpql, Salesorderdetail.class).setParameter("pId", pId).getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<?> findOrderDetailByProductWithMoreThanOneSOP() {
