@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taller3.dao.implementation.ProductDaoImpl;
 import com.taller3.model.prod.*;
@@ -31,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public Product saveProduct(Product p, Integer pCatId, Integer pSubId, Integer um1Id, Integer um2Id) /* throws Exception */ {
 		Optional<Productcategory> opCat = proCatRep.findById(pCatId);
 		Optional<Productsubcategory> opSub = proSubRep.findById(pSubId);
@@ -54,11 +56,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public Product searchProduct(Integer pId) {
 		return pDao.findById(pId);
 	}
 
 	@Override
+	@Transactional
 	public Product updateProduct(Integer pId, Product p) {
 		Product toChange = pDao.findById(pId);
 		toChange.setBillofmaterials1(p.getBillofmaterials1());
@@ -100,59 +104,72 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteProduct(Integer pId) {
 		pDao.delete(pDao.findById(pId));
 	}
 
 	@Override
+	@Transactional
 	public Productcategory saveProductCategory(Productcategory pc) {
 		proCatRep.save(pc);
 		return pc;
 	}
 
 	@Override
+	@Transactional
 	public Productcategory searchProductCategory(Integer pcId) {
 		Optional<Productcategory> opProd = proCatRep.findById(pcId);
 		return (opProd.isPresent()) ? opProd.get() : null;
 	}
 
 	@Override
+	@Transactional
 	public Productcategory updateProductCategory(Integer pcId, Productcategory pc) {
 		return pc;
 	}
 
 	@Override
+	@Transactional
 	public void deleteProductCategory(Integer pcId) {
 		proCatRep.delete(proCatRep.findById(pcId).get());
 	}
 
 	@Override
+	@Transactional
 	public Productsubcategory saveProductSubcategory(Productsubcategory psc) {
 		proSubRep.save(psc);
 		return psc;
 	}
 
 	@Override
+	@Transactional
 	public Productsubcategory searchProductSubcategory(Integer pscId) {
 		Optional<Productsubcategory> opProd = proSubRep.findById(pscId);
 		return (opProd.isPresent()) ? opProd.get() : null;
 	}
 
 	@Override
+	@Transactional
 	public Productsubcategory updateProductSubcategory(Integer pscId, Productsubcategory psc) {
 		return psc;
 	}
 
 	@Override
+	@Transactional
 	public void deleteProductSubcategory(Integer pscId) {
 		proSubRep.delete(proSubRep.findById(pscId).get());
 	}
 
+	@Override
+	@Transactional
 	public Unitmeasure saveUnitmeasure(Unitmeasure um) {
 		umRep.save(um);
 		return um;
 	}
 
+	@Override
+	@Transactional
 	public Unitmeasure searchUnitmeasure(Integer umId) {
 		Optional<Unitmeasure> opUm = umRep.findById(umId);
 		return (opUm.isPresent()) ? opUm.get() : null;
@@ -162,42 +179,62 @@ public class ProductServiceImpl implements ProductService {
 		return um;
 	}
 
+	@Override
+	@Transactional
 	public void deleteUnitmeasure(Integer umId) {
 		umRep.delete(umRep.findById(umId).get());
 	}
 	
+	@Override
+	@Transactional
 	public Product findById(Integer id){
 		return pDao.findById(id);
 	}
 	
+	@Override
+	@Transactional
 	public Product findByProductNumber(String productnumber) {
 		return pDao.findByProductNumber(productnumber);
 	}
 	
+	@Override
+	@Transactional
 	public Iterable<Product> findByStyle(String style) {
 		return pDao.findByStyle(style);
 	}
 	
-	public Iterable<Object[]> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
+	@Override
+	@Transactional
+	public Iterable<?> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
 		return pDao.findByDateRange(sellstartdate, sellenddate);
 	}
 	
+	@Override
+	@Transactional
 	public Iterable<String> findAllProductnumbers() {
 		return pDao.findAllProductnumbers();
 	}
 	
+	@Override
+	@Transactional
 	public Iterable<Product> findAllProducts() {
 		return pDao.findAll();
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Productcategory> findAllCategories() {
 		return proCatRep.findAll();
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Productsubcategory> findAllSubcategories() {
 		return proSubRep.findAll();
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Unitmeasure> findAllUnits() {
 		return umRep.findAll();
 	}

@@ -62,11 +62,17 @@ public class ProductDaoImpl implements ProductDao {
 		return entityManager.createQuery(jpql, Product.class).setParameter("style", style).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<?> findByDateRange(LocalDate sellstartdate, LocalDate sellenddate) {
 		String jpql = "SELECT p, COUNT(*) FROM Producto p, Specialofferproduct s WHERE s.id.productid = p.productid AND s.sellstartdate BETWEEN :sellstartdate AND :sellenddate AND s.sellenddate BETWEEN :sellstartdate AND :sellenddate ORDER BY p.productnumber ASC";
 		return entityManager.createQuery(jpql).setParameter("sellstartdate", sellstartdate).setParameter("sellenddate", sellenddate).getResultList();
+	}
+	
+	@Override
+	@Transactional
+	public List<String> findAllProductnumbers() {
+		String jpql = "Select p.productnumber from Product p";
+		return entityManager.createQuery(jpql, String.class).getResultList();
 	}
 }

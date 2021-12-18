@@ -1,6 +1,6 @@
 package com.taller3.dao.implementation;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
@@ -51,14 +51,14 @@ public class SpecialOfferDaoImpl implements SpecialOfferDao {
 
 	@Override
 	@Transactional
-	public List<Specialoffer> findByStartDate(Timestamp startdate) {
+	public List<Specialoffer> findByStartDate(LocalDate startdate) {
 		String jpql = "Select s from Specialoffer s WHERE s.startdate =: startdate";
 		return entityManager.createQuery(jpql, Specialoffer.class).setParameter("startdate", startdate).getResultList();
 	}
 
 	@Override
 	@Transactional
-	public List<Specialoffer> findByEndDate(Timestamp enddate) {
+	public List<Specialoffer> findByEndDate(LocalDate enddate) {
 		String jpql = "Select s from Specialoffer s WHERE s.enddate =: enddate";
 		return entityManager.createQuery(jpql, Specialoffer.class).setParameter("enddate", enddate).getResultList();
 	}

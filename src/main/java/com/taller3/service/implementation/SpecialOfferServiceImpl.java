@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taller3.dao.implementation.SpecialOfferDaoImpl;
 import com.taller3.model.sales.Specialoffer;
@@ -22,17 +23,20 @@ public class SpecialOfferServiceImpl implements SpecialofferService {
 	}
 
 	@Override
+	@Transactional
 	public Specialoffer saveSpecialOffer(Specialoffer s) {
 		soDao.save(s);
 		return s;
 	}
 
 	@Override
+	@Transactional
 	public Specialoffer searchSpecialOffer(Integer sId) {
 		return soDao.findById(sId);
 	}
 
 	@Override
+	@Transactional
 	public Specialoffer updateSpecialOffer(Integer sId, Specialoffer s) {
 		Specialoffer toChange = soDao.findById(sId);
 		String cat = s.getCategory();
@@ -56,22 +60,31 @@ public class SpecialOfferServiceImpl implements SpecialofferService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteSpecialOffer(Integer sId) {
 		soDao.delete(soDao.findById(sId));
 	}
 
+	@Override
+	@Transactional
 	public Iterable<Specialoffer> findAll() {
 		return soDao.findAll();
 	}
 	
-	public Iterable<Specialoffer> findByStartDate(Timestamp startdate) {
+	@Override
+	@Transactional
+	public Iterable<Specialoffer> findByStartDate(LocalDate startdate) {
 		return soDao.findByStartDate(startdate);
 	}
 	
-	public Iterable<Specialoffer> findByEndDate(Timestamp enddate) {
+	@Override
+	@Transactional
+	public Iterable<Specialoffer> findByEndDate(LocalDate enddate) {
 		return soDao.findByEndDate(enddate);
 	}
 
+	@Override
+	@Transactional
 	public Specialoffer findById(Integer id) {
 		return soDao.findById(id);
 	}

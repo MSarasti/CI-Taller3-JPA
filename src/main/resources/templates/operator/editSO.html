@@ -44,6 +44,22 @@
 								th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
 								class="text-danger"></span>
 						</div>
+						<div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="startdate" class="col-form-label">Start date</label> <input
+								type="date" th:field="*{startdate}" class="form-control" id="startdate"
+								placeholder="startdate"> <span
+								th:if="${#fields.hasErrors('startdate')}" th:errors="*{startdate}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="enddate" class="col-form-label">End date</label> <input
+								type="date" th:field="*{enddate}" class="form-control" id="enddate"
+								placeholder="enddate"> <span
+								th:if="${#fields.hasErrors('enddate')}" th:errors="*{enddate}"
+								class="text-danger"></span>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">

@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taller3.dao.implementation.*;
 import com.taller3.model.prod.*;
@@ -26,6 +27,7 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	}
 
 	@Override
+	@Transactional
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, Integer pId, Integer soId) {
 		Specialoffer so = soDao.findById(soId);
 		List<Specialofferproduct> offers = so.getSpecialofferproducts();
@@ -39,6 +41,8 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 		return sd;
 	}
 	
+	@Override
+	@Transactional
 	public Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, SpecialofferproductPK sopId) {
 		Specialofferproduct sop = sopDao.findById(sopId);
 		sd.setSpecialofferproduct(sop);
@@ -47,11 +51,13 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	}
 
 	@Override
+	@Transactional
 	public Salesorderdetail searchSalesOrderDetail(Integer sdId) {
 		return sodDao.findById(sdId);
 	}
 
 	@Override
+	@Transactional
 	public Salesorderdetail updateSalesOrderDetail(Integer sdId, Salesorderdetail sd) {
 		Salesorderdetail toChange = sodDao.findById(sdId);
 		toChange.setCarriertrackingnumber(sd.getCarriertrackingnumber());
@@ -67,27 +73,32 @@ public class SalesOrderDetailServiceImpl implements SalesorderdetailService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteSalesOrderDetail(Integer sdId) {
 		sodDao.delete(sodDao.findById(sdId));
 	}
 	
 	@Override
+	@Transactional
 	public Salesorderdetail findById(Integer id) {
 		return sodDao.findById(id);
 	}
 
 	@Override
+	@Transactional
 	public Iterable<Salesorderdetail> findAll(){
 		return sodDao.findAll();
 	}
 	
 	@Override
+	@Transactional
 	public Iterable<Salesorderdetail> findByProductId(Integer pId) {
 		return sodDao.findByProductId(pId);
 	}
 	
 	@Override
-	public Iterable<Object[]> findOrderDetailByProductWithMoreThanOneSOP() {
+	@Transactional
+	public Iterable<?> findOrderDetailByProductWithMoreThanOneSOP() {
 		return sodDao.findOrderDetailByProductWithMoreThanOneSOP();
 	}
 }

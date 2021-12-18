@@ -2,7 +2,6 @@ package com.taller3.model.sales;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class Specialoffer implements Serializable {
 	@Positive(groups={addValidation.class, updateValidation.class}, message="Discount must be greater than 0")
 	private BigDecimal discountpct;
 
-	private Timestamp enddate;
+	private LocalDate enddate;
 
 	private Integer maxqty;
 
@@ -60,7 +59,7 @@ public class Specialoffer implements Serializable {
 
 	private Integer rowguid;
 
-	private Timestamp startdate;
+	private LocalDate startdate;
 
 	private String type;
 
@@ -93,7 +92,7 @@ public class Specialoffer implements Serializable {
 		return this.discountpct;
 	}
 
-	public Timestamp getEnddate() {
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
@@ -121,7 +120,7 @@ public class Specialoffer implements Serializable {
 		return this.specialofferproducts;
 	}
 
-	public Timestamp getStartdate() {
+	public LocalDate getStartdate() {
 		return this.startdate;
 	}
 
@@ -148,7 +147,7 @@ public class Specialoffer implements Serializable {
 		this.discountpct = discountpct;
 	}
 
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 
@@ -176,7 +175,7 @@ public class Specialoffer implements Serializable {
 		this.specialofferproducts = specialofferproducts;
 	}
 
-	public void setStartdate(Timestamp startdate) {
+	public void setStartdate(LocalDate startdate) {
 		this.startdate = startdate;
 	}
 

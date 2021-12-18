@@ -30,6 +30,7 @@
 								<th>Unit Price Discount</th>
 								<th>Special Offer ID</th>
 								<th>Product ID</th>
+								<th>Product ID query</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -41,6 +42,8 @@
 								<td th:text="${order.unitpricediscount}"></td>
 								<td th:text="${order.specialofferproduct.id.specialofferid}"></td>
 								<td th:text="${order.specialofferproduct.id.productid}"></td>
+								<td><a th:href="@{/salesorderdetail/query/productid/{productid}(productid=${order.specialofferproduct.id.productid})}"
+									class="btn btn-primary"><i class="fa fa-search"></i></a></td>
 								<td><a th:href="@{/salesorderdetail/edit/{id}(id=${order.id})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 								<td><a th:href="@{/salesorderdetail/del/{id}(id=${order.id})}"
@@ -57,10 +60,10 @@
 					<label for="productid" class="col-form-label">Product ID</label> <input
 								type="text" th:name="productid" class="form-control" id="productid"
 								placeholder="Number"> 
-					<a th:href="@{/salesorderdetail/get/{productid}(productid=${productid})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for order details with a given product id</a>	
+					<a th:href="@{/salesorderdetail/query/productid/{productid}(productid=${productid})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for order details with a given product id</a>	
 				</p>
 				<p>
-					<a th:href="@{/salesorderdetail/get/SOP}" class="btn btn-primary"><i class="fa fa-search"></i>Search for order details with more than one SOP</a>	
+					<a th:href="@{/salesorderdetail/query/SOP}" class="btn btn-primary"><i class="fa fa-search"></i>Search for order details with more than one SOP</a>	
 				</p>
 				<p>
 					<a href="/operator/"><i class="fas fa-user-edit ml-2"></i> Go to Operator Menu</a>

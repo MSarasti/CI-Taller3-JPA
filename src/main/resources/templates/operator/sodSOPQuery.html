@@ -26,6 +26,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>Product Name</th>
 								<th>Unit Price</th>
 								<th>Unit Price Discount</th>
 								<th>Special Offer ID</th>
@@ -36,14 +37,15 @@
 						</thead>
 						<tbody>
 							<tr th:each="order : ${sales}">
-								<td th:text="${order.id}"></td>
-								<td th:text="${order.unitprice}"></td>
-								<td th:text="${order.unitpricediscount}"></td>
-								<td th:text="${order.specialofferproduct.id.specialofferid}"></td>
-								<td th:text="${order.specialofferproduct.id.productid}"></td>
-								<td><a th:href="@{/salesorderdetail/edit/{id}(id=${order.id})}"
+								<td th:text="${order.value0.id}"></td>
+								<td th:text="${order.value1}"></td>
+								<td th:text="${order.value0.unitprice}"></td>
+								<td th:text="${order.value0.unitpricediscount}"></td>
+								<td th:text="${order.value0.specialofferproduct.id.specialofferid}"></td>
+								<td th:text="${order.value0.specialofferproduct.id.productid}"></td>
+								<td><a th:href="@{/salesorderdetail/edit/{id}(id=${order.value0.id})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-								<td><a th:href="@{/salesorderdetail/del/{id}(id=${order.id})}"
+								<td><a th:href="@{/salesorderdetail/del/{id}(id=${order.value0.id})}"
 									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
 							</tr>
 						</tbody>

@@ -10,5 +10,6 @@ public interface SalesorderdetailService {
 	public Salesorderdetail findById(Integer id);
 	public Iterable<Salesorderdetail> findAll();
 	public Iterable<Salesorderdetail> findByProductId(Integer pId);
-	public Iterable<Object[]> findOrderDetailByProductWithMoreThanOneSOP();
+	public Iterable<?> findOrderDetailByProductWithMoreThanOneSOP();
+	Salesorderdetail saveSalesOrderDetail(Salesorderdetail sd, SpecialofferproductPK sopId);
 }

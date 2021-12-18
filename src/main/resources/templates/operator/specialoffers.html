@@ -29,6 +29,8 @@
 								<th>Category</th>
 								<th>Discount</th>
 								<th>Modified Date</th>
+								<th>Start date query</th>
+								<th>End date query</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -39,6 +41,10 @@
 								<td th:text="${soffer.category}"></td>
 								<td th:text="${soffer.discountpct}"></td>
 								<td th:text="${soffer.modifieddate}"></td>
+								<td><a th:href="@{/specialoffer/query/startdate/{startdate}(startdate=${soffer.startdate})}" 
+									class="btn btn-primary"><i class="fa fa-search"></i></a></td>
+								<td><a th:href="@{/specialoffer/query/enddate/{enddate}(enddate=${soffer.enddate})}" 
+									class="btn btn-primary"><i class="fa fa-search"></i></a></td>
 								<td><a th:href="@{/specialoffer/edit/{id}(id=${soffer.specialofferid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 								<td><a th:href="@{/specialoffer/del/{id}(id=${soffer.specialofferid})}"
@@ -55,13 +61,13 @@
 					<label for="startdate" class="col-form-label">Start Date</label> <input
 								type="date" th:name="startdate" class="form-control" id="startdate"
 								placeholder="Date"> 
-					<a th:href="@{/specialoffer/get/{startdate}(startdate=${startdate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given start date</a>	
+					<a th:href="@{/specialoffer/query/startdate/{startdate}(startdate=${startdate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given start date</a>	
 				</p>
 				<p>
 					<label for="enddate" class="col-form-label">End Date</label> <input
 								type="date" th:name="enddate" class="form-control" id="enddate"
 								placeholder="Style"> 
-					<a th:href="@{/specialoffer/get/{enddate}(enddate=${enddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given end date</a>	
+					<a th:href="@{/specialoffer/query/enddate/{enddate}(enddate=${enddate})}" class="btn btn-primary"><i class="fa fa-search"></i>Search for special offers with a given end date</a>	
 				</p>
 				<p>
 					<a href="/operator/"><i class="fas fa-user-edit ml-2"></i> Go to Operator Menu</a>

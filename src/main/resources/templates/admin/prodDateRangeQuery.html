@@ -26,6 +26,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>Amount</th>
 								<th>Product number</th>
 								<th>Name</th>
 								<th>Days to manufacture</th>
@@ -42,20 +43,21 @@
 						</thead>
 						<tbody>
 							<tr th:each="prod : ${products}">
-								<td th:text="${prod.productid}"></td>
-								<td th:text="${prod.productnumber}"></td>
-								<td th:text="${prod.name}"></td>
-								<td th:text="${prod.daystomanufacture}"></td>
-								<td th:text="${prod.sellstartdate}"></td>
-								<td th:text="${prod.sellenddate}"></td>
-								<td th:text="${prod.style}"></td>
-								<td th:text="${prod.productsubcategory.productcategory.name}"></td>
-								<td th:text="${prod.productsubcategory.name}"></td>
-								<td th:text="${prod.unitmeasure1.name}"></td>
-								<td th:text="${prod.unitmeasure2.name}"></td>
-								<td><a th:href="@{/product/edit/{id}(id=${prod.productid})}"
+								<td th:text="${prod.value0.productid}"></td>
+								<td th:text="${prod.value1}"></td>
+								<td th:text="${prod.value0.productnumber}"></td>
+								<td th:text="${prod.value0.name}"></td>
+								<td th:text="${prod.value0.daystomanufacture}"></td>
+								<td th:text="${prod.value0.sellstartdate}"></td>
+								<td th:text="${prod.value0.sellenddate}"></td>
+								<td th:text="${prod.value0.style}"></td>
+								<td th:text="${prod.value0.productsubcategory.productcategory.name}"></td>
+								<td th:text="${prod.value0.productsubcategory.name}"></td>
+								<td th:text="${prod.value0.unitmeasure1.name}"></td>
+								<td th:text="${prod.value0.unitmeasure2.name}"></td>
+								<td><a th:href="@{/product/edit/{id}(id=${prod.value0.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-								<td><a th:href="@{/product/del/{id}(id=${prod.productid})}"
+								<td><a th:href="@{/product/del/{id}(id=${prod.value0.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
 							</tr>
 						</tbody>
