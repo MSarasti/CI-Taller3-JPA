@@ -16,6 +16,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.taller3.Taller3MsApplication;
 import com.taller3.dao.implementation.*;
 import com.taller3.model.prod.*;
+import com.taller3.repository.ProductCategoryRepository;
+import com.taller3.repository.ProductSubcategoryRepository;
+import com.taller3.repository.UnitmeasureRepository;
 
 @SpringBootTest
 @ContextConfiguration(classes = Taller3MsApplication.class)
@@ -23,6 +26,15 @@ import com.taller3.model.prod.*;
 public class ProductTests {
 	@Autowired
 	public ProductDaoImpl prodDao;
+	
+	@Autowired
+	public ProductCategoryRepository pCatRep;
+	
+	@Autowired
+	public ProductSubcategoryRepository pSubRep;
+	
+	@Autowired
+	public UnitmeasureRepository umRep;
 	
 	public Unitmeasure unit1;
 	
@@ -42,26 +54,29 @@ public class ProductTests {
 		unit1 = new Unitmeasure();
 		unit2 = new Unitmeasure();
 		
-		unit1.setUnitmeasurecode(1);
 		unit1.setModifieddate(new Timestamp(System.currentTimeMillis()));
 		unit1.setName("Name Unit 1");
 		
-		unit2.setUnitmeasurecode(2);
 		unit2.setModifieddate(new Timestamp(System.currentTimeMillis()));
 		unit2.setName("Name Unit 2");
+		
+		unit1 = umRep.save(unit1);
+		unit2 = umRep.save(unit2);
 		
 		prodCat.setName("Name Category");
 		prodCat.setModifieddate(new Timestamp(System.currentTimeMillis()));
 		
+		prodCat = pCatRep.save(prodCat);
+		
 		prodSub.setName("Name Subcategory");
 		prodSub.setModifieddate(new Timestamp(System.currentTimeMillis()));
+		
+		prodSub = pSubRep.save(prodSub);
 		
 		prod.setName("Name Product");
 		prod.setColor("Blue");
 		prod.setSize("Small");
 		
-		unit1.addProducts1(prod);
-		unit2.addProducts2(prod);
 		prodCat.addProductsubcategory(prodSub);
 		prodSub.setProductcategory(prodCat);
 		prod.setProductsubcategory(prodSub);
@@ -92,6 +107,7 @@ public class ProductTests {
 			prod.setDaystomanufacture(1);
 			prod.setSellstartdate(LocalDate.now().minusDays(10));
 			prod.setSellenddate(LocalDate.now().plusDays(10));
+			prodDao.save(prod);
 		}
 		
 		@Test

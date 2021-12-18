@@ -2,6 +2,7 @@ package com.taller3.model.prod;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -61,6 +62,8 @@ public class Unitmeasure implements Serializable {
 	}
 
 	public Product addProducts1(Product products1) {
+		if(this.products1==null)
+			this.products1 = new ArrayList<>();
 		getProducts1().add(products1);
 		products1.setUnitmeasure1(this);
 
@@ -68,6 +71,8 @@ public class Unitmeasure implements Serializable {
 	}
 
 	public Product addProducts2(Product products2) {
+		if(this.products2==null)
+			this.products2 = new ArrayList<>();
 		getProducts2().add(products2);
 		products2.setUnitmeasure2(this);
 
